@@ -1,0 +1,12 @@
+# 1. Add project number and api key
+# 2. Currently, the server sends an echo to a test device, so registration ID is needed as well
+# 3. Rename file to keys.conf
+
+# Project Number from Google Developers Console
+project_number=<PROJECT_NUMBER>
+
+# API Key for Google Cloud Messaging
+api_key=<API_KEY>
+
+# GCM Registration ID for a test phone
+reg_id=<REG_ID>
