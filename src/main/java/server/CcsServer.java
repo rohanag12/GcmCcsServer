@@ -29,6 +29,8 @@ import java.util.logging.Logger;
 @SuppressWarnings("WeakerAccess")
 public class CcsServer {
 
+    // ToDo: Get rid of json-simple, use gson instead
+
     private static final Logger logger = Logger.getLogger(CcsServer.class.getSimpleName());
 
     private XMPPTCPConnection connection;
