@@ -3,4 +3,6 @@
 
 target/
 
+mqtt-persistence/
+
 keys.conf
