@@ -51,6 +51,15 @@ public class MqttServer implements MqttCallback {
         logi("Subscribed");
     }
 
+    private void sendControlMessage(String message) throws MqttException {
+        mqtt.publish(
+                MqttParameters.PUBLISH_TOPIC,
+                message.getBytes(),
+                MqttParameters.QOS,
+                MqttParameters.RETAINED
+        );
+    }
+
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
 
@@ -79,10 +88,6 @@ public class MqttServer implements MqttCallback {
         }
     }
 
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken token) {
-    }
-
     private static final Logger logger = Logger.getLogger(MqttServer.class.getName());
 
     private static void logi(String msg) {
@@ -103,5 +108,9 @@ public class MqttServer implements MqttCallback {
 
     private static void logs(String msg, Throwable throwable) {
         logger.log(Level.SEVERE, msg, throwable);
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken token) {
     }
 }
