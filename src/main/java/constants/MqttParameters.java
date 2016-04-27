@@ -18,7 +18,7 @@ public class MqttParameters {
 
     public static final String SUBSCRIBE_TOPIC = "remote/control";
 
-    public static final String PUBLISH_TOPIC = "";
+    public static final String PUBLISH_TOPIC = "remote/status";
     public static final boolean RETAINED = false;
 
     public static final int QOS = 1;
