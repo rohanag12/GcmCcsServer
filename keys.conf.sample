@@ -10,3 +10,6 @@ api_key=<API_KEY>
 
 # GCM Registration ID for a test phone
 reg_id=<REG_ID>
+
+# Category (Package name of client application)
+category=<CATEGORY>

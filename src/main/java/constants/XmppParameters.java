@@ -12,9 +12,12 @@ import java.util.Properties;
 
 public final class XmppParameters {
 
-    private static final String GCM_SERVER = "gcm.googleapis.com";
-    private static final String LOCAL_SERVER = "127.0.0.1";
+    public static final String GCM_SERVER = "gcm.googleapis.com";
+    public static final String LOCAL_SERVER = "127.0.0.1";
+
     public static final int PORT = 5235;
+
+    public static final String CATEGORY;
 
     public static final String PROJECT_ID;
     public static final String API_KEY;
@@ -56,5 +59,6 @@ public final class XmppParameters {
         PROJECT_ID = props.getProperty("project_number", null);
         API_KEY = props.getProperty("api_key", null);
         PHONE_REG_ID = props.getProperty("reg_id", null);
+        CATEGORY = props.getProperty("category", null);
     }
 }
