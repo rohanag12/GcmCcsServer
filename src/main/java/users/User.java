@@ -1,26 +1,34 @@
 package users;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import devices.Device;
+import org.lightcouch.Document;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class User {
+public class User extends Document {
 
     @Expose
+    private
     String username;
 
     @Expose
-    String email;
+    private String email;
 
     @Expose
-    String phone;
+    private String phone;
 
     @Expose
-    Set<Device> devices;
+    private Set<Device> devices;
 
-    String clientId;
+    private String token;
+
+    private final static Gson GSON = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
 
     public User(String username, String email, String phone) {
         this.username = username;
@@ -62,11 +70,16 @@ public class User {
         this.phone = phone;
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getToken() {
+        return token;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return GSON.toJson(this);
     }
 }
