@@ -18,9 +18,10 @@ import utils.XmppHelper;
 
 import javax.net.ssl.SSLSocketFactory;
 import java.io.IOException;
-import java.util.Map;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Smack implementation of a server for GCM XMPP Cloud Connection Server.
@@ -28,11 +29,22 @@ import java.util.logging.Logger;
 @SuppressWarnings("WeakerAccess")
 public class CcsServer {
 
-    private static final Logger logger = Logger.getLogger(CcsServer.class.getSimpleName());
-
     private XMPPTCPConnection connection;
 
     private final ServerType type;
+
+    private static final Logger logger;
+
+    static {
+        logger = Logger.getLogger(CcsServer.class.getSimpleName());
+        try {
+            FileHandler fh = new FileHandler(logger.getName() + ".log");
+            fh.setFormatter(new SimpleFormatter());
+            logger.addHandler(fh);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public CcsServer(ServerType type) {
         this.type = type;
@@ -81,10 +93,16 @@ public class CcsServer {
     protected void handleUpstreamMessage(JsonObject json) {
         // PackageName of the application that sent this message.
         String category = json.get("category").getAsString();
+
+        if (!category.equals(XmppParameters.CATEGORY)) {
+            logger.severe("Incoming message category - " + category + ", not from my app !!!");
+            return;
+        }
+
         String from = json.get("from").getAsString();
-        @SuppressWarnings("unchecked")
-        Map<String, String> payload = (Map<String, String>) json.get("data");
-        payload.put("ECHO", "Application: " + category);
+        JsonObject payload = json.get("data").getAsJsonObject();
+
+        payload.addProperty("ECHO", "Application: " + category);
 
         // Send an ECHO response back
         String echo = XmppHelper.createJsonMessage(from, XmppHelper.nextMessageId(), payload,

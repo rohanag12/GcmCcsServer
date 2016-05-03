@@ -1,9 +1,7 @@
 package utils;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class XmppHelper {
@@ -24,23 +22,25 @@ public class XmppHelper {
      * @return JSON encoded GCM message.
      */
     public static String createJsonMessage(String to, String messageId,
-                                           Map<String, String> payload, String collapseKey, Long timeToLive,
+                                           JsonObject payload, String collapseKey, Long timeToLive,
                                            Boolean delayWhileIdle) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("to", to);
+
+        JsonObject message = new JsonObject();
+
+        message.addProperty("to", to);
         if (collapseKey != null) {
-            message.put("collapse_key", collapseKey);
+            message.addProperty("collapse_key", collapseKey);
         }
         if (timeToLive != null) {
-            message.put("time_to_live", timeToLive);
+            message.addProperty("time_to_live", timeToLive);
         }
         if (delayWhileIdle != null && delayWhileIdle) {
-            message.put("delay_while_idle", true);
+            message.addProperty("delay_while_idle", true);
         }
-        message.put("message_id", messageId);
-        message.put("data", payload);
+        message.addProperty("message_id", messageId);
+        message.add("data", payload);
 
-        return new Gson().toJson(message);
+        return message.toString();
     }
 
     /**
@@ -52,12 +52,12 @@ public class XmppHelper {
      * @return JSON encoded ack.
      */
     public static String createJsonAck(String to, String messageId) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("message_type", "ack");
-        message.put("to", to);
-        message.put("message_id", messageId);
+        JsonObject message = new JsonObject();
+        message.addProperty("message_type", "ack");
+        message.addProperty("to", to);
+        message.addProperty("message_id", messageId);
 
-        return new Gson().toJson(message);
+        return message.toString();
     }
 
     /**
