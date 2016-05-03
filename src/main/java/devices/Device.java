@@ -3,19 +3,26 @@ package devices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
+import org.lightcouch.Document;
 
-public class Device {
+public class Device extends Document {
 
     @Expose
     String name;
 
     @Expose
+    String room;
+
+    @Expose
     Status status;
 
-    static final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    static final Gson GSON = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
 
-    Device(String name) {
+    Device(String name, String room) {
         this.name = name;
+        this.room = room;
         switchOff();
     }
 
@@ -23,12 +30,12 @@ public class Device {
         return status;
     }
 
-    void switchOn() {
+    public void switchOn() {
         // ToDo: Switch it ON !!
         status = Status.ON;
     }
 
-    void switchOff() {
+    public void switchOff() {
         // ToDo: Switch it OFF !!
         status = Status.OFF;
     }
@@ -39,6 +46,14 @@ public class Device {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     enum Status {

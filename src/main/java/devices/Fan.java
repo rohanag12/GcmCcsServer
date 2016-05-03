@@ -4,15 +4,17 @@ import com.google.gson.annotations.Expose;
 
 import java.util.logging.Logger;
 
-class Fan extends Device {
-
-    private final int max_speed;
+public class Fan extends Device {
 
     @Expose
-    private int speed = 0;
+    private int speed;
 
-    Fan(String name, int max_speed) {
-        super(name);
+    @Expose
+    private final int max_speed;
+
+    Fan(String name, String room, int max_speed) {
+        super(name, room);
+        speed = 0;
         this.max_speed = max_speed;
     }
 
@@ -40,7 +42,7 @@ class Fan extends Device {
 
     @Override
     public String toString() {
-        return gson.toJson(this);
+        return GSON.toJson(this);
     }
 
     private static final Logger logger = Logger.getLogger(Fan.class.getName());

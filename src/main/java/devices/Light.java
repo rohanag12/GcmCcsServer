@@ -2,8 +2,8 @@ package devices;
 
 public class Light extends Device {
 
-    public Light(String name) {
-        super(name);
+    Light(String name, String room) {
+        super(name, room);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class Light extends Device {
 
     @Override
     public String toString() {
-        return gson.toJson(this);
+        return GSON.toJson(this);
     }
 }
